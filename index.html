@@ -228,14 +228,3 @@ html_content_fireworks = """
   </script>
 </body>
 </html>
-"""
-
-# Save updated HTML and zip
-html_fireworks_path = Path("/mnt/data/thu_gui_quynh_fireworks.html")
-html_fireworks_path.write_text(html_content_fireworks, encoding="utf-8")
-
-zip_fireworks_path = Path("/mnt/data/thu_gui_quynh_fireworks.zip")
-with zipfile.ZipFile(zip_fireworks_path, 'w') as zipf:
-    zipf.write(html_fireworks_path, arcname="thu_gui_quynh_fireworks.html")
-
-zip_fireworks_path.name
