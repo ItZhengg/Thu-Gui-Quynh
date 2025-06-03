@@ -45,20 +45,23 @@
       z-index: 10;
       position: relative;
     }
-    .bunny, .newheart {
+    .kitty, .heart, .sticker {
       position: absolute;
-      width: 60px;
-      height: 60px;
+      width: 80px;
+      height: 80px;
       animation: pop 1s ease-out;
       pointer-events: none;
     }
-    .bunny {
-      background-image: url('/mnt/data/rabbit-2403904_1280.png');
+    .kitty {
+      background-image: url('https://cdn.pixabay.com/photo/2017/06/07/07/51/rabbit-2403904_1280.png');
     }
-    .newheart {
-      background-image: url('/mnt/data/ukraine-7424066_1280.png');
+    .heart {
+      background-image: url('https://cdn.pixabay.com/photo/2023/07/26/08/10/ukraine-7424066_1280.png');
     }
-    .bunny, .newheart {
+    .sticker {
+      background-image: url('https://cdn-icons-png.flaticon.com/512/616/616408.png');
+    }
+    .kitty, .heart, .sticker {
       background-size: contain;
       background-repeat: no-repeat;
     }
@@ -70,21 +73,16 @@
       position: fixed;
       left: 50%;
       top: 50%;
-      width: 250px;
-      height: 250px;
-      background-image: url('/mnt/data/heart-12028_256.gif');
-      background-size: contain;
-      background-repeat: no-repeat;
-      transform: translate(-50%, -50%) scale(0);
+      transform: translate(-50%, -50%);
       opacity: 0;
       pointer-events: none;
       z-index: 20;
-      animation-fill-mode: forwards;
+      animation: fadeInHeart 2s forwards;
     }
-    @keyframes heartShow {
-      0% { transform: translate(-50%, -50%) scale(0.2); opacity: 0; }
-      50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
-      100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+    @keyframes fadeInHeart {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.2); }
+      50% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(1.5); }
     }
     .firework {
       position: fixed;
@@ -111,7 +109,7 @@
     <p id="letter"></p>
   </div>
 
-  <div id="bigHeart"></div>
+  <img id="bigHeart" src="https://cdn.pixabay.com/animation/2023/03/27/16/43/16-43-54-857_512.gif" width="250" height="250" />
 
   <audio id="bgMusic">
     <source src="https://cdn.pixabay.com/audio/2022/10/25/audio_2119a7b9d6.mp3" type="audio/mpeg" />
@@ -132,7 +130,7 @@
     }
 
     function popCuteStuff() {
-      const types = ['bunny', 'newheart'];
+      const types = ['kitty', 'heart', 'sticker'];
       for (let i = 0; i < 20; i++) {
         let el = document.createElement('div');
         el.className = types[Math.floor(Math.random() * types.length)];
@@ -147,7 +145,7 @@
       const heart = document.getElementById('bigHeart');
       heart.style.animation = 'none';
       heart.offsetHeight;
-      heart.style.animation = 'heartShow 1.5s forwards';
+      heart.style.animation = 'fadeInHeart 2s forwards';
     }
 
     function explodeCenterFireworks() {
