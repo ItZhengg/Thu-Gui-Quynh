@@ -1,4 +1,3 @@
-html_content_fireworks = """
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -20,18 +19,15 @@ html_content_fireworks = """
       height: 100vh;
       overflow: hidden;
       position: relative;
-      user-select: none;
     }
-
     .container {
-      background: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.85);
       border-radius: 20px;
       padding: 30px;
       text-align: center;
       box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
       z-index: 10;
     }
-
     button {
       margin-top: 20px;
       padding: 10px 20px;
@@ -40,114 +36,75 @@ html_content_fireworks = """
       border: none;
       border-radius: 10px;
       cursor: pointer;
-      user-select: none;
     }
-
     #letter {
       display: none;
       font-size: 20px;
       margin-top: 20px;
       color: #333;
-      animation: fadeIn 2s;
       z-index: 10;
       position: relative;
     }
-
-    @keyframes flowerPop {
-      0% {
-        transform: scale(0);
-        opacity: 0;
-      }
-      100% {
-        transform: scale(1);
-        opacity: 1;
-      }
-    }
-
-    .flower,
-    .heart,
-    .sticker {
+    .kitty, .heart, .sticker {
       position: absolute;
-      width: 40px;
-      height: 40px;
-      animation: flowerPop 1s ease-out;
+      width: 60px;
+      height: 60px;
+      animation: pop 1s ease-out;
       pointer-events: none;
-      user-select: none;
     }
-
-    .flower {
-      background-image: url('https://i.pinimg.com/originals/af/94/e7/af94e7c87397ac51dc4fc46402d4ce57.png');
-      background-size: contain;
-      background-repeat: no-repeat;
+    .kitty {
+      background-image: url('https://pngimg.com/uploads/hello_kitty/hello_kitty_PNG61.png');
     }
     .heart {
-      background-image: url('https://cdn-icons-png.flaticon.com/512/833/833472.png');
-      background-size: contain;
-      background-repeat: no-repeat;
+      background-image: url('https://cdn-icons-png.flaticon.com/512/1211/1211038.png');
     }
     .sticker {
       background-image: url('https://cdn-icons-png.flaticon.com/512/616/616408.png');
+    }
+    .kitty, .heart, .sticker {
       background-size: contain;
       background-repeat: no-repeat;
     }
-
+    @keyframes pop {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
     #bigHeart {
       position: fixed;
       left: 50%;
       top: 50%;
-      width: 200px;
-      height: 200px;
-      background-image: url('https://cdn-icons-png.flaticon.com/512/833/833472.png');
+      width: 250px;
+      height: 250px;
+      background-image: url('https://cdn-icons-png.flaticon.com/512/1211/1211038.png');
       background-size: contain;
       background-repeat: no-repeat;
-      background-position: center;
       transform: translate(-50%, -50%) scale(0);
       opacity: 0;
       pointer-events: none;
-      user-select: none;
       z-index: 20;
       animation-fill-mode: forwards;
     }
-
+    @keyframes heartShow {
+      0% { transform: translate(-50%, -50%) scale(0.2); opacity: 0; }
+      50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+    }
     .firework {
       position: fixed;
-      width: 10px;
-      height: 10px;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
       background: radial-gradient(circle, white, yellow, orange, red);
-      pointer-events: none;
-      user-select: none;
       opacity: 1;
-      filter: drop-shadow(0 0 5px yellow);
-      animation: fireworkExplode 600ms forwards ease-out;
+      filter: drop-shadow(0 0 10px yellow);
+      animation: explode 800ms forwards ease-out;
       z-index: 15;
     }
-
-    @keyframes fireworkExplode {
-      0% {
-        transform: scale(1);
-        opacity: 1;
-      }
-      100% {
-        transform: scale(5);
-        opacity: 0;
-      }
+    @keyframes explode {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(5); opacity: 0; }
     }
-
-    @keyframes heartPop {
-      0% {
-        transform: translate(-50%, -50%) scale(0.2);
-        opacity: 0;
-      }
-      50% {
-        transform: translate(-50%, -50%) scale(1.2);
-        opacity: 1;
-      }
-      100% {
-        transform: translate(-50%, -50%) scale(1.5);
-        opacity: 0;
-      }
-    }
+    audio { display: none; }
   </style>
 </head>
 <body>
@@ -159,71 +116,56 @@ html_content_fireworks = """
 
   <div id="bigHeart"></div>
 
-  <audio id="bgMusic" loop>
+  <audio id="bgMusic">
     <source src="https://cdn.pixabay.com/audio/2022/10/25/audio_2119a7b9d6.mp3" type="audio/mpeg" />
   </audio>
 
   <script>
-    let bigHeartTimer;
-    let bigHeartCycles = 0;
-
     function showLetter() {
       const letter = document.getElementById('letter');
-      letter.innerHTML = `Quỳnh à...<br><br>\\"Có thể dạo này chúng ta hơi xa cách nhưng không sao hết, tập trung cho bản thân, đến khi trở lại chúng ta sẽ trở nên thân thiết hơn bao giờ hết. M luôn là người quan trọng với t, và điều đó không thay đổi. &lt;3<br><br>MISS YOU\\"`;
+      letter.innerHTML = `Quỳnh à...<br><br>Có thể dạo này chúng ta hơi xa cách nhưng không sao hết, tập trung cho bản thân, đến khi trở lại chúng ta sẽ trở nên thân thiết hơn bao giờ hết. M luôn là người quan trọng với t, và điều đó không thay đổi. &lt;3<br><br>MISS YOU`;
       letter.style.display = 'block';
-      playEffects();
-      document.getElementById('bgMusic').play();
-      launchBigHeartCycle();
+      showBigHeart();
+      popCuteStuff();
+      explodeCenterFireworks();
+      const music = document.getElementById('bgMusic');
+      music.play().catch(() => {
+        alert("Bạn cần nhấn vào màn hình hoặc bấm nút để phát nhạc nếu bị chặn!");
+      });
     }
 
-    function playEffects() {
+    function popCuteStuff() {
+      const types = ['kitty', 'heart', 'sticker'];
       for (let i = 0; i < 20; i++) {
         let el = document.createElement('div');
-        const types = ['flower', 'heart', 'sticker'];
         el.className = types[Math.floor(Math.random() * types.length)];
         el.style.left = Math.random() * 100 + 'vw';
         el.style.top = Math.random() * 100 + 'vh';
-        el.style.transform = 'scale(0)';
         document.body.appendChild(el);
-        setTimeout(() => el.style.transform = 'scale(1)', 100);
         setTimeout(() => el.remove(), 4000);
       }
-      launchFireworks();
-    }
-
-    function launchFireworks() {
-      let count = 15;
-      for (let i = 0; i < count; i++) {
-        setTimeout(() => {
-          let fw = document.createElement('div');
-          fw.className = 'firework';
-          fw.style.left = Math.random() * window.innerWidth + 'px';
-          fw.style.top = Math.random() * window.innerHeight + 'px';
-          document.body.appendChild(fw);
-          fw.addEventListener('animationend', () => fw.remove());
-        }, i * 200);
-      }
-    }
-
-    function launchBigHeartCycle() {
-      bigHeartCycles = 0;
-      if (bigHeartTimer) clearInterval(bigHeartTimer);
-      bigHeartTimer = setInterval(() => {
-        if (bigHeartCycles >= 5) {
-          clearInterval(bigHeartTimer);
-          document.getElementById('bigHeart').style.opacity = 0;
-          return;
-        }
-        showBigHeart();
-        bigHeartCycles++;
-      }, 1200);
     }
 
     function showBigHeart() {
-      const bigHeart = document.getElementById('bigHeart');
-      bigHeart.style.animation = 'none';
-      bigHeart.offsetHeight; // trigger reflow
-      bigHeart.style.animation = 'heartPop 1s forwards';
+      const heart = document.getElementById('bigHeart');
+      heart.style.animation = 'none';
+      heart.offsetHeight;
+      heart.style.animation = 'heartShow 1.5s forwards';
+    }
+
+    function explodeCenterFireworks() {
+      for (let i = 0; i < 15; i++) {
+        setTimeout(() => {
+          let fw = document.createElement('div');
+          fw.className = 'firework';
+          let angle = (i / 15) * 2 * Math.PI;
+          let radius = 100 + Math.random() * 50;
+          fw.style.left = (window.innerWidth / 2 + radius * Math.cos(angle)) + 'px';
+          fw.style.top = (window.innerHeight / 2 + radius * Math.sin(angle)) + 'px';
+          document.body.appendChild(fw);
+          fw.addEventListener('animationend', () => fw.remove());
+        }, i * 60);
+      }
     }
   </script>
 </body>
