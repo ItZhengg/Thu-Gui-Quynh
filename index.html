@@ -1,9 +1,10 @@
+html_content_fireworks = """
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thư Gửi Người Ấy</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Thư Gửi Quỳnh</title>
   <style>
     body {
       margin: 0;
@@ -19,6 +20,7 @@
       height: 100vh;
       overflow: hidden;
       position: relative;
+      user-select: none;
     }
 
     .container {
@@ -27,15 +29,7 @@
       padding: 30px;
       text-align: center;
       box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-      z-index: 1;
-    }
-
-    input {
-      padding: 10px;
-      font-size: 18px;
-      border-radius: 10px;
-      border: none;
-      margin-top: 10px;
+      z-index: 10;
     }
 
     button {
@@ -46,6 +40,7 @@
       border: none;
       border-radius: 10px;
       cursor: pointer;
+      user-select: none;
     }
 
     #letter {
@@ -54,48 +49,131 @@
       margin-top: 20px;
       color: #333;
       animation: fadeIn 2s;
+      z-index: 10;
+      position: relative;
     }
 
     @keyframes flowerPop {
-      0% { transform: scale(0); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
     }
 
-    .flower, .heart, .sticker {
+    .flower,
+    .heart,
+    .sticker {
       position: absolute;
       width: 40px;
       height: 40px;
       animation: flowerPop 1s ease-out;
+      pointer-events: none;
+      user-select: none;
     }
 
-    .flower { background-image: url('https://i.pinimg.com/originals/af/94/e7/af94e7c87397ac51dc4fc46402d4ce57.png'); background-size: contain; background-repeat: no-repeat; }
-    .heart { background-image: url('https://cdn-icons-png.flaticon.com/512/833/833472.png'); background-size: contain; background-repeat: no-repeat; }
-    .sticker { background-image: url('https://cdn-icons-png.flaticon.com/512/616/616408.png'); background-size: contain; background-repeat: no-repeat; }
+    .flower {
+      background-image: url('https://i.pinimg.com/originals/af/94/e7/af94e7c87397ac51dc4fc46402d4ce57.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+    .heart {
+      background-image: url('https://cdn-icons-png.flaticon.com/512/833/833472.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+    .sticker {
+      background-image: url('https://cdn-icons-png.flaticon.com/512/616/616408.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
 
-    audio { display: none; }
+    #bigHeart {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      width: 200px;
+      height: 200px;
+      background-image: url('https://cdn-icons-png.flaticon.com/512/833/833472.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
+      pointer-events: none;
+      user-select: none;
+      z-index: 20;
+      animation-fill-mode: forwards;
+    }
+
+    .firework {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: radial-gradient(circle, white, yellow, orange, red);
+      pointer-events: none;
+      user-select: none;
+      opacity: 1;
+      filter: drop-shadow(0 0 5px yellow);
+      animation: fireworkExplode 600ms forwards ease-out;
+      z-index: 15;
+    }
+
+    @keyframes fireworkExplode {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(5);
+        opacity: 0;
+      }
+    }
+
+    @keyframes heartPop {
+      0% {
+        transform: translate(-50%, -50%) scale(0.2);
+        opacity: 0;
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1.5);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>Gửi tới người quan trọng ❤️</h2>
-    <input type="text" id="name" placeholder="Nhập tên người ấy...">
-    <br>
+    <h2>Gửi tới Quỳnh ❤️</h2>
     <button onclick="showLetter()">Mở thư 💌</button>
     <p id="letter"></p>
   </div>
 
-  <audio id="bgMusic" autoplay loop>
-    <source src="https://cdn.pixabay.com/audio/2022/10/25/audio_2119a7b9d6.mp3" type="audio/mpeg">
+  <div id="bigHeart"></div>
+
+  <audio id="bgMusic" loop>
+    <source src="https://cdn.pixabay.com/audio/2022/10/25/audio_2119a7b9d6.mp3" type="audio/mpeg" />
   </audio>
 
   <script>
+    let bigHeartTimer;
+    let bigHeartCycles = 0;
+
     function showLetter() {
-      const name = document.getElementById('name').value || 'Cậu';
       const letter = document.getElementById('letter');
-      letter.innerHTML = `${name} à...<br><br>"Có thể dạo này chúng ta hơi xa cách nhưng không sao hết, tập trung cho bản thân, đến khi trở lại chúng ta sẽ trở nên thân thiết hơn bao giờ hết. M luôn là người quan trọng với t, và điều đó không thay đổi. &lt;3<br><br>MISS YOU"`;
+      letter.innerHTML = `Quỳnh à...<br><br>\\"Có thể dạo này chúng ta hơi xa cách nhưng không sao hết, tập trung cho bản thân, đến khi trở lại chúng ta sẽ trở nên thân thiết hơn bao giờ hết. M luôn là người quan trọng với t, và điều đó không thay đổi. &lt;3<br><br>MISS YOU\\"`;
       letter.style.display = 'block';
       playEffects();
       document.getElementById('bgMusic').play();
+      launchBigHeartCycle();
     }
 
     function playEffects() {
@@ -110,7 +188,54 @@
         setTimeout(() => el.style.transform = 'scale(1)', 100);
         setTimeout(() => el.remove(), 4000);
       }
+      launchFireworks();
+    }
+
+    function launchFireworks() {
+      let count = 15;
+      for (let i = 0; i < count; i++) {
+        setTimeout(() => {
+          let fw = document.createElement('div');
+          fw.className = 'firework';
+          fw.style.left = Math.random() * window.innerWidth + 'px';
+          fw.style.top = Math.random() * window.innerHeight + 'px';
+          document.body.appendChild(fw);
+          fw.addEventListener('animationend', () => fw.remove());
+        }, i * 200);
+      }
+    }
+
+    function launchBigHeartCycle() {
+      bigHeartCycles = 0;
+      if (bigHeartTimer) clearInterval(bigHeartTimer);
+      bigHeartTimer = setInterval(() => {
+        if (bigHeartCycles >= 5) {
+          clearInterval(bigHeartTimer);
+          document.getElementById('bigHeart').style.opacity = 0;
+          return;
+        }
+        showBigHeart();
+        bigHeartCycles++;
+      }, 1200);
+    }
+
+    function showBigHeart() {
+      const bigHeart = document.getElementById('bigHeart');
+      bigHeart.style.animation = 'none';
+      bigHeart.offsetHeight; // trigger reflow
+      bigHeart.style.animation = 'heartPop 1s forwards';
     }
   </script>
 </body>
 </html>
+"""
+
+# Save updated HTML and zip
+html_fireworks_path = Path("/mnt/data/thu_gui_quynh_fireworks.html")
+html_fireworks_path.write_text(html_content_fireworks, encoding="utf-8")
+
+zip_fireworks_path = Path("/mnt/data/thu_gui_quynh_fireworks.zip")
+with zipfile.ZipFile(zip_fireworks_path, 'w') as zipf:
+    zipf.write(html_fireworks_path, arcname="thu_gui_quynh_fireworks.html")
+
+zip_fireworks_path.name
