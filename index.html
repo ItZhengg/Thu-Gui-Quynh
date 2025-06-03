@@ -45,23 +45,20 @@
       z-index: 10;
       position: relative;
     }
-    .kitty, .heart, .sticker {
+    .bunny, .newheart {
       position: absolute;
       width: 60px;
       height: 60px;
       animation: pop 1s ease-out;
       pointer-events: none;
     }
-    .kitty {
-      background-image: url('https://pngimg.com/uploads/hello_kitty/hello_kitty_PNG61.png');
+    .bunny {
+      background-image: url('/mnt/data/rabbit-2403904_1280.png');
     }
-    .heart {
-      background-image: url('https://cdn-icons-png.flaticon.com/512/1211/1211038.png');
+    .newheart {
+      background-image: url('/mnt/data/ukraine-7424066_1280.png');
     }
-    .sticker {
-      background-image: url('https://cdn-icons-png.flaticon.com/512/616/616408.png');
-    }
-    .kitty, .heart, .sticker {
+    .bunny, .newheart {
       background-size: contain;
       background-repeat: no-repeat;
     }
@@ -75,7 +72,7 @@
       top: 50%;
       width: 250px;
       height: 250px;
-      background-image: url('https://cdn-icons-png.flaticon.com/512/1211/1211038.png');
+      background-image: url('/mnt/data/heart-12028_256.gif');
       background-size: contain;
       background-repeat: no-repeat;
       transform: translate(-50%, -50%) scale(0);
@@ -135,7 +132,7 @@
     }
 
     function popCuteStuff() {
-      const types = ['kitty', 'heart', 'sticker'];
+      const types = ['bunny', 'newheart'];
       for (let i = 0; i < 20; i++) {
         let el = document.createElement('div');
         el.className = types[Math.floor(Math.random() * types.length)];
