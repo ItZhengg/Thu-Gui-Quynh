@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thư Gửi Người Ấy</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-image: url('https://i.pinimg.com/originals/67/f4/60/67f460274334e69e2db2ef5b1657a343.jpg');
+      background-size: cover;
+      background-position: center;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 20px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+
+    input {
+      padding: 10px;
+      font-size: 18px;
+      border-radius: 10px;
+      border: none;
+      margin-top: 10px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: pink;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    #letter {
+      display: none;
+      font-size: 20px;
+      margin-top: 20px;
+      color: #333;
+      animation: fadeIn 2s;
+    }
+
+    @keyframes flowerPop {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .flower, .heart, .sticker {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      animation: flowerPop 1s ease-out;
+    }
+
+    .flower { background-image: url('https://i.pinimg.com/originals/af/94/e7/af94e7c87397ac51dc4fc46402d4ce57.png'); background-size: contain; background-repeat: no-repeat; }
+    .heart { background-image: url('https://cdn-icons-png.flaticon.com/512/833/833472.png'); background-size: contain; background-repeat: no-repeat; }
+    .sticker { background-image: url('https://cdn-icons-png.flaticon.com/512/616/616408.png'); background-size: contain; background-repeat: no-repeat; }
+
+    audio { display: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Gửi tới người quan trọng ❤️</h2>
+    <input type="text" id="name" placeholder="Nhập tên người ấy...">
+    <br>
+    <button onclick="showLetter()">Mở thư 💌</button>
+    <p id="letter"></p>
+  </div>
+
+  <audio id="bgMusic" autoplay loop>
+    <source src="https://cdn.pixabay.com/audio/2022/10/25/audio_2119a7b9d6.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    function showLetter() {
+      const name = document.getElementById('name').value || 'Cậu';
+      const letter = document.getElementById('letter');
+      letter.innerHTML = `${name} à...<br><br>"Có thể dạo này chúng ta hơi xa cách nhưng không sao hết, tập trung cho bản thân, đến khi trở lại chúng ta sẽ trở nên thân thiết hơn bao giờ hết. M luôn là người quan trọng với t, và điều đó không thay đổi. &lt;3<br><br>MISS YOU"`;
+      letter.style.display = 'block';
+      playEffects();
+      document.getElementById('bgMusic').play();
+    }
+
+    function playEffects() {
+      for (let i = 0; i < 20; i++) {
+        let el = document.createElement('div');
+        const types = ['flower', 'heart', 'sticker'];
+        el.className = types[Math.floor(Math.random() * types.length)];
+        el.style.left = Math.random() * 100 + 'vw';
+        el.style.top = Math.random() * 100 + 'vh';
+        el.style.transform = 'scale(0)';
+        document.body.appendChild(el);
+        setTimeout(() => el.style.transform = 'scale(1)', 100);
+        setTimeout(() => el.remove(), 4000);
+      }
+    }
+  </script>
+</body>
+</html>
