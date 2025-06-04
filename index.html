@@ -13,12 +13,19 @@
       align-items: center;
       flex-direction: column;
       height: 100vh;
+      overflow: hidden;
     }
 
     h1 {
       margin-bottom: 30px;
       font-size: 32px;
       color: #000;
+      animation: floatText 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatText {
+      from { transform: translateY(0); }
+      to { transform: translateY(-10px); }
     }
 
     .envelope {
@@ -28,6 +35,7 @@
       padding: 40px;
       position: relative;
       text-align: center;
+      box-shadow: 0 0 30px rgba(255, 192, 203, 0.5);
     }
 
     .envelope::before {
@@ -52,6 +60,12 @@
     .hearts img {
       width: 30px;
       height: 30px;
+      animation: floatHeart 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatHeart {
+      from { transform: translateY(0); }
+      to { transform: translateY(-8px); }
     }
 
     .open-button {
@@ -66,6 +80,13 @@
       align-items: center;
       gap: 10px;
       font-weight: bold;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
     }
 
     .open-button img {
@@ -78,6 +99,27 @@
       font-size: 18px;
       display: none;
       color: #444;
+      animation: fadeIn 1s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .stickers {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      width: 80px;
+      height: 80px;
+      background: url('https://pngimg.com/uploads/hello_kitty/hello_kitty_PNG61.png') no-repeat center/contain;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
     }
   </style>
 </head>
@@ -104,9 +146,17 @@
     </p>
   </div>
 
+  <div class="stickers"></div>
+
+  <audio id="bgMusic" autoplay loop>
+    <source src="https://cdn.pixabay.com/audio/2022/10/25/audio_2119a7b9d6.mp3" type="audio/mpeg">
+  </audio>
+
   <script>
     function showLetter() {
-      document.getElementById("letter").style.display = "block";
+      const letter = document.getElementById("letter");
+      letter.style.display = "block";
+      document.getElementById("bgMusic").play().catch(() => {});
     }
   </script>
 </body>
